@@ -323,6 +323,9 @@ class InternalSession(object):
         if isinstance(id_token, ua.UserNameIdentityToken):
             if self.user_manager.check_user_token(self, id_token) == False:
                 raise utils.ServiceError(ua.StatusCodes.BadUserAccessDenied)
+        elif isinstance(id_token, ua.uaprotocol_auto.AnonymousIdentityToken):
+            if not self.user_manager.allow_anonymous:
+               raise utils.ServiceError(ua.StatusCodes.BadUserAccessDenied)
         self.logger.info("Activated internal session %s for user %s", self.name, self.user)
         return result
 

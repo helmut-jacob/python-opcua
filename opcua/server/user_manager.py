@@ -27,6 +27,7 @@ class UserManager(object):
         self._parent = parent
         self.user_manager = self.default_user_manager
         self.allow_remote_admin = True
+        self.allow_anonymous = True
 
     @property
     def private_key(self):
