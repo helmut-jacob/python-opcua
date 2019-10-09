@@ -212,7 +212,10 @@ class InternalServer(object):
             for edp in self.endpoints:
                 edp1 = copy(edp)
                 url = urlparse(edp1.EndpointUrl)
-                url = url._replace(netloc=sockname[0] + ":" + str(sockname[1]))
+                netloc = "%s:%s"%sockname
+                if params and params.EndpointUrl:
+                    netloc = urlparse(params.EndpointUrl).netloc
+                url = url._replace(netloc=netloc)
                 edp1.EndpointUrl = url.geturl()
                 edps.append(edp1)
             return edps
